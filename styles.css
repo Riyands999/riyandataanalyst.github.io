@@ -1,0 +1,956 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', 'Merriweather', sans-serif;
+  color: #fff;
+  background: radial-gradient(circle at top, #0a0f2c, #000);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Canvas background */
+canvas#bgCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Header */
+header {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 0.6em 1.2em;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-weight: 800;
+  font-size: 1.3em;
+  color: #00ffff;
+}
+
+/* Nav */
+nav ul {
+  display: flex;
+  gap: 0.6em;
+  list-style: none;
+}
+
+nav a {
+  text-decoration: none;
+  color: #00ffff;
+  font-weight: 600;
+  padding: 0.35em 0.8em;
+  font-size: 0.8em;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #111, #222);
+  box-shadow: 0 0 8px #00ffff33;
+  transition: all 0.3s ease;
+}
+
+nav a:hover,
+nav a.active {
+  color: #fff;
+  box-shadow: 0 0 15px #00ffff, 0 0 30px #0077ff;
+  background: linear-gradient(145deg, #00ffff22, #0077ff22);
+}
+
+/* Section defaults */
+main {
+  position: relative;
+  z-index: 1;
+}
+
+section {
+  min-height: 100vh;
+  padding: 4em 2em;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+h1, h2 {
+  color: #00ffff;
+  margin-bottom: 0.5em;
+}
+
+/* Buttons */
+button {
+  background: linear-gradient(135deg, #0077ff, #00ffff);
+  border: none;
+  padding: 10px 20px;
+  font-size: 0.9em;
+  border-radius: 25px;
+  color: #fff;
+  cursor: pointer;
+  margin-top: 1em;
+  transition: 0.3s;
+  box-shadow: 0 0 10px #00ffff55;
+}
+
+button:hover {
+  box-shadow: 0 0 25px #00ffff, 0 0 40px #0077ff;
+  transform: scale(1.08);
+}
+
+/* Home Section */
+.home-section {
+  height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  color: #fff;
+  padding: 5.2em 6em;
+  text-align: left;
+  gap: 18px;
+}
+
+.home-section > h1 {
+  font-size: 2.4rem;
+  color: #00ffff;
+  margin-bottom: 6px;
+}
+
+/* Typing paragraphs */
+#introParagraphs {
+  max-width: 620px;
+  font-size: 1.18rem;
+  font-family: 'Merriweather', 'Poppins', serif;
+  font-weight: 400;
+  color: #e6f7ff;
+  line-height: 1.8;
+  white-space: pre-line;
+  border-right: 2px solid #00ffff;
+  overflow: hidden;
+  padding-right: 6px;
+}
+
+#introParagraphs .highlight-name {
+  font-weight: 700;
+  font-size: 1.35rem;
+  background: linear-gradient(90deg, #00ffff, #0077ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 8px rgba(0, 204, 255, 0.18);
+}
+
+.stop-blink {
+  border-right: none !important;
+}
+
+/* ---------------------------
+   About Section (photo + 3 cards)
+   --------------------------- */
+#about {
+  text-align: center;
+  padding-top: 3.5em;
+}
+
+.about-photo {
+  margin-bottom: 1.5em;
+}
+
+.about-photo img {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #00ffff;
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s cubic-bezier(.2,.9,.2,1);
+}
+
+.about-photo.visible img {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.about-highlights {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2em;
+  justify-content: center;
+  margin-top: 1.5em;
+  max-width: 1100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.highlight-box {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 1.4em;
+  width: 100%;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.12);
+  transition: all 0.6s cubic-bezier(.2,.9,.2,1);
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.highlight-box.visible {
+  opacity: 1;
+  transform: translateY(0);
+  box-shadow: 0 0 22px rgba(0, 255, 255, 0.28);
+}
+
+.highlight-box h3 {
+  color: #00ffff;
+  margin-bottom: 0.6em;
+}
+
+.highlight-box p {
+  color: #e6f7ff;
+  font-family: 'Merriweather', serif;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* --------------------------
+   Projects Section
+-------------------------- */
+.projects-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5em;
+  margin-top: 2em;
+}
+
+.project-card {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 1em;
+  border-radius: 15px;
+  box-shadow: 0 0 15px #00ffff33;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.project-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.project-card h3 {
+  margin-top: 0.8em;
+  color: #00ffff;
+  font-size: 1em;
+}
+
+.project-card p {
+  font-size: 0.85em;
+  margin: 0.6em 0;
+}
+
+.project-card a {
+  color: #00ffff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.project-card a:hover {
+  text-decoration: underline;
+}
+
+.project-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.project-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 20px #00ffff66;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .projects-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .about-highlights {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .projects-container,
+  .about-highlights {
+    grid-template-columns: 1fr;
+  }
+  .home-section {
+    padding: 4em 2em;
+  }
+  #introParagraphs {
+    font-size: 1rem;
+    max-width: 100%;
+  }
+}
+
+/* --------------------------
+   Resume buttons styling
+   (appended only; matches existing button look)
+-------------------------- */
+.resume-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.2rem;
+  flex-wrap: wrap;
+}
+
+.resume-buttons .resume-link {
+  display: inline-block;
+  text-decoration: none;
+  background: linear-gradient(135deg, #0077ff, #00ffff);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 0 10px #00ffff55;
+  transition: 0.3s ease;
+}
+
+.resume-buttons .resume-link:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 25px #00ffff, 0 0 40px #0077ff;
+}
+
+/* --------------------------
+   Education Section
+-------------------------- */
+.education-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  margin-top: 2em;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.education-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5em;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 15px;
+  padding: 1.5em;
+  box-shadow: 0 0 15px #00ffff33;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 0.6s ease, transform 0.6s ease;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.education-card.show {
+  opacity: 1;
+  transform: translateY(0);
+  box-shadow: 0 0 25px #00ffff55;
+}
+
+.degree-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.education-details h3 {
+  color: #00ffff;
+  margin-bottom: 0.4em;
+  font-size: 1.1rem;
+}
+
+.education-details p {
+  color: #e6f7ff;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 0.4em;
+}
+
+.download-degree {
+  display: inline-block;
+  margin-top: 0.6em;
+  background: linear-gradient(135deg, #0077ff, #00ffff);
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 0 10px #00ffff55;
+  transition: 0.3s ease;
+}
+
+.download-degree:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #00ffff, 0 0 30px #0077ff;
+}
+
+/* Responsive Education Section */
+@media (max-width: 900px) {
+  .education-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .degree-img {
+    margin-bottom: 0.8em;
+  }
+}
+
+/* --------------------------
+   Education Section - Fixed Alignment
+-------------------------- */
+.education-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  margin-top: 2em;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.education-card {
+  display: flex;
+  align-items: flex-start; /* keeps items aligned at the top */
+  gap: 1.5em;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 15px;
+  padding: 1.5em;
+  box-shadow: 0 0 15px #00ffff33;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 0.6s ease, transform 0.6s ease;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.education-card.show {
+  opacity: 1;
+  transform: translateY(0);
+  box-shadow: 0 0 25px #00ffff55;
+}
+
+.degree-img {
+  width: 140px;          /* slightly wider for alignment */
+  height: 140px;
+  min-width: 140px;      /* ensures all images have same width */
+  border-radius: 10px;
+  object-fit: cover;
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.education-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* aligns text vertically to image */
+}
+
+.education-details h3 {
+  color: #00ffff;
+  margin-bottom: 0.4em;
+  font-size: 1.1rem;
+}
+
+.education-details p {
+  color: #e6f7ff;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  margin-bottom: 0.4em;
+}
+
+.download-degree {
+  display: inline-block;
+  margin-top: 0.6em;
+  background: linear-gradient(135deg, #0077ff, #00ffff);
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 0 10px #00ffff55;
+  transition: 0.3s ease;
+}
+
+.download-degree:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #00ffff, 0 0 30px #0077ff;
+}
+
+/* Responsive Education Section */
+@media (max-width: 900px) {
+  .education-card {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .degree-img {
+    margin-bottom: 0.8em;
+  }
+}
+
+/* --------------------------
+   Education Section Styling
+-------------------------- */
+.education-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  max-width: 900px;
+  margin: 2em auto 0 auto;
+}
+
+.education-card {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 1.5em;
+  border-radius: 14px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.12);
+  gap: 1.5em;
+  flex-wrap: wrap;
+}
+
+.degree-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+.education-details {
+  text-align: left;
+  flex: 1;
+  color: #e6f7ff;
+}
+
+.education-details h3 {
+  color: #00ffff;
+  margin-bottom: 0.5em;
+}
+
+.education-details p {
+  margin-bottom: 0.3em;
+}
+
+.download-degree {
+  display: inline-block;
+  margin-top: 0.6em;
+  text-decoration: none;
+  background: linear-gradient(135deg, #0077ff, #00ffff);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 0 10px #00ffff55;
+  transition: 0.3s ease;
+}
+
+.download-degree:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #00ffff, 0 0 40px #0077ff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .education-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .education-details {
+    text-align: center;
+  }
+}
+
+/* ---------- Certifications Section ---------- */
+#certifications {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+#certifications h2 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  color: #00ccff;
+}
+
+.certifications-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.certificate-card {
+  background: #0e1a2b;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0, 204, 255, 0.3);
+  padding: 20px;
+  width: 300px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.certificate-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+}
+
+.certificate-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.certificate-card h3 {
+  font-size: 1.2rem;
+  color: #00ffff;
+  margin-bottom: 10px;
+}
+
+.certificate-card p {
+  font-size: 0.95rem;
+  color: #cfd9e0;
+  margin: 4px 0;
+}
+
+.view-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 8px 18px;
+  background-color: #00ccff;
+  color: #0e1a2b;
+  border-radius: 25px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s;
+}
+
+.view-btn:hover {
+  background-color: #00ffff;
+  transform: scale(1.05);
+}
+
+.view-btn.disabled {
+  background-color: #666;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+<section id="certifications">
+  <h2>Certifications</h2>
+  <p>Verified certifications highlighting my analytics & programming skills.</p>
+
+  <div class="certifications-container">
+    <!-- Certificate 1 -->
+    <div class="certificate-card" aria-label="Digiskills certificate">
+      <div class="certificate-image">
+        <img src="images/digiskills_certificate.jpg" alt="Data Analytics & Business Intelligence - Digiskills">
+      </div>
+      <div class="certificate-info">
+        <h3>Data Analytics & Business Intelligence</h3>
+        <p><strong>Institute:</strong> Digiskills.pk</p>
+        <p><strong>Duration:</strong> 4-Mar-2023 to June-2023</p>
+        <a href="certificates/digiskills_certificate.pdf" target="_blank" class="view-btn" rel="noopener">View Certificate</a>
+      </div>
+    </div>
+
+    <!-- Certificate 2 -->
+    <div class="certificate-card" aria-label="IBM Python certificate">
+      <div class="certificate-image">
+        <img src="images/ibm_python_certificate.jpg" alt="IBM Python for Data Science - CognitiveClass.ai">
+      </div>
+      <div class="certificate-info">
+        <h3>IBM Python for Data Science</h3>
+        <p><strong>Institute:</strong> CognitiveClass.ai</p>
+        <p><strong>Date:</strong> 28-July-2023</p>
+        <a href="certificates/ibm_python_certificate.pdf" target="_blank" class="view-btn" rel="noopener">View Certificate</a>
+      </div>
+    </div>
+
+    <!-- Certificate 3 -->
+    <div class="certificate-card" aria-label="Coming soon certificate">
+      <div class="certificate-image">
+        <img src="images/coming_soon.jpg" alt="More certificates coming soon">
+      </div>
+      <div class="certificate-info">
+        <h3>Coming Soon</h3>
+        <p>More certifications in progress.</p>
+        <a href="#" class="view-btn disabled">Not Available</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+.certifications-container {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  align-items: stretch; /* ensures all cards align in height */
+}
+
+/* --- Fix Certificate Card Button Alignment --- */
+.certifications-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.certificate-card {
+  background: rgba(0, 10, 30, 0.85);
+  border-radius: 20px;
+  padding: 20px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.certificate-image img {
+  width: 100%;
+  height: 180px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.certificate-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+}
+
+.certificate-info h3 {
+  color: #00ffff;
+  margin: 10px 0 5px;
+}
+
+.certificate-info p {
+  color: #ccc;
+  margin: 3px 0;
+}
+
+/* Keep all view buttons at bottom */
+.view-btn {
+  display: inline-block;
+  margin-top: auto;
+  background: #00ccff;
+  color: #000;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.view-btn:hover {
+  background: #00ffff;
+}
+
+.view-btn.disabled {
+  background: #666;
+  pointer-events: none;
+}
+
+/* ---------- Contact Section ---------- */
+#contact {
+  padding: 80px 20px;
+  text-align: center;
+  color: #fff;
+}
+
+#contact h2 {
+  font-size: 2.2rem;
+  color: #00ffff;
+  margin-bottom: 10px;
+}
+
+#contact p {
+  color: #ccc;
+  margin-bottom: 40px;
+  font-size: 1.1rem;
+}
+
+.contact-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.contact-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 12px;
+  padding: 25px;
+  width: 260px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.contact-card i {
+  font-size: 2rem;
+  color: #00ffff;
+  margin-bottom: 10px;
+}
+
+.contact-card h3 {
+  color: #00ffaa;
+  font-size: 1.3rem;
+  margin-bottom: 8px;
+}
+
+.contact-card a {
+  color: #00ccff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.contact-card a:hover {
+  color: #00ffaa;
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+/* ---------- Contact Form ---------- */
+.contact-form {
+  max-width: 600px;
+  margin: 60px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 12px 15px;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #00ffaa;
+}
+
+.contact-form textarea {
+  resize: none;
+  height: 120px;
+}
+
+.contact-form button {
+  background: linear-gradient(90deg, #00ffff, #00ffaa);
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  color: #000;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: box-shadow 0.3s;
+}
+
+.contact-form button:hover {
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+}
+
+
+/* ---------- Contact Section ---------- */
+#contact {
+  text-align: left; /* Align text and list to left */
+  padding: 60px 80px;
+  background: rgba(0, 255, 255, 0.05);
+  border-radius: 12px;
+  margin-top: 40px;
+}
+
+
+#contact h2 {
+  margin-bottom: 10px;
+}
+
+#contact p {
+  margin-bottom: 20px;
+  font-size: 1.1em;
+  color: #ddd;
+}
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+  margin-left: 0; /* Remove center alignment */
+  max-width: 600px;
+  text-align: left;
+}
+
+
+.contact-list li {
+  background: rgba(255, 255, 255, 0.07);
+  margin: 8px 0;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 1.05em;
+  transition: 0.3s;
+}
+
+.contact-list li:hover {
+  background: rgba(0, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.contact-list a {
+  color: #00ffff;
+  text-decoration: none;
+}
+
+.contact-list a:hover {
+  text-decoration: underline;
+}
+
