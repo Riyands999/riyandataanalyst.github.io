@@ -954,51 +954,7 @@ button:hover {
   text-decoration: underline;
 }
 
-/* ---------- Mobile Responsive Fix (Updated & Forced Centering) ---------- */
-@media screen and (max-width: 768px) {
-  html, body {
-    width: 100% !important;
-    overflow-x: hidden !important;
-    text-align: center !important;
-  }
 
-  header, nav, main, section {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: 100% !important;
-    margin: 0 auto !important;
-  }
-
-  nav {
-    flex-wrap: wrap !important;
-    gap: 10px !important;
-  }
-
-  .nav-btn {
-    display: inline-block !important;
-    text-align: center !important;
-  }
-
-  .about-photo, .highlight-box, .project-card, .education-card, .certification-card {
-    margin: 15px auto !important;
-    width: 90% !important;
-    text-align: center !important;
-  }
-
-  #introParagraphs {
-    font-size: 0.95rem !important;
-    padding: 0 12px !important;
-    text-align: center !important;
-  }
-
-  canvas#bgCanvas {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-  }
-}
 
 /* ---------- Final Mobile Fix (Clean & Balanced Layout) ---------- */
 @media screen and (max-width: 768px) {
