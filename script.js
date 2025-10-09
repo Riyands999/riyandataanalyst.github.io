@@ -157,9 +157,19 @@ function animate(timestamp) {
 particles = Array.from({ length: totalParticles }, () => new Particle());
 requestAnimationFrame(animate);
 
-// ---------- Scroll navigation ----------
+// ---------- Scroll navigation with mobile offset fix ----------
 const navButtons = document.querySelectorAll('.nav-btn');
 const sections = document.querySelectorAll('main section');
+
+function scrollToSection(target) {
+  const rect = target.getBoundingClientRect();
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const offset = isMobile ? 70 : 0; // mobile offset to avoid top nav overlapping
+  window.scrollTo({
+    top: rect.top + scrollTop - offset,
+    behavior: 'smooth'
+  });
+}
 
 function onScroll() {
   const scrollPos = window.scrollY + window.innerHeight / 2;
@@ -180,7 +190,7 @@ navButtons.forEach(btn => {
   btn.addEventListener('click', e => {
     e.preventDefault();
     const target = document.querySelector(btn.getAttribute('href'));
-    if (target) target.scrollIntoView({ behavior: 'smooth' });
+    if (target) scrollToSection(target);
   });
 });
 
@@ -188,7 +198,8 @@ navButtons.forEach(btn => {
 const exploreBtn = document.getElementById('exploreBtn');
 if (exploreBtn) {
   exploreBtn.addEventListener('click', () => {
-    document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
+    const projects = document.querySelector('#projects');
+    if (projects) scrollToSection(projects);
   });
 }
 
