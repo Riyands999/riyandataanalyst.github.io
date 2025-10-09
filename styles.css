@@ -956,7 +956,7 @@ button:hover {
 
 
 
-/* ---------- FINAL RESPONSIVE FIX (Two Rows Buttons, Centered Layout) ---------- */
+/* ---------- TRUE FINAL MOBILE FIX (Visible Title + 2-Row Buttons + Center Layout) ---------- */
 @media screen and (max-width: 768px) {
 
   /* General Layout */
@@ -964,11 +964,11 @@ button:hover {
     width: 100%;
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
     text-align: center;
+    overflow-x: hidden;
   }
 
-  /* Header Section */
+  /* Header and Title */
   header {
     display: flex;
     flex-direction: column;
@@ -976,78 +976,77 @@ button:hover {
     justify-content: center;
     text-align: center;
     width: 100%;
-    padding: 12px 0;
+    padding: 10px 0;
   }
 
   header h1,
   .site-title,
   .logo {
-    display: block;
+    display: block !important;
     text-align: center;
-    margin: 6px 0;
-    font-size: 1.4rem;
-    color: inherit;
+    font-size: 1.3rem !important;
+    margin: 5px 0;
   }
 
-  /* Navigation Styling */
+  /* Navigation buttons layout */
   nav {
-    display: flex;
-    flex-wrap: wrap; /* Allows buttons in two rows */
-    justify-content: center;
-    align-items: center;
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr); /* 3 buttons per row */
     gap: 10px;
-    padding: 5px 0;
+    justify-items: center;
     width: 100%;
+    margin-top: 10px;
   }
 
-  /* Button Style */
   nav .nav-btn {
     display: inline-block;
     text-align: center;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 0.95rem;
-    min-width: 100px; /* Ensures even button width */
-    margin: 4px;
+    width: 90px; /* uniform size */
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    border-radius: 18px;
   }
 
-  /* Center Main Sections */
+  /* Make sure all sections stay centered */
   main, section {
     width: 95%;
     margin: 0 auto;
     text-align: center;
   }
 
-  /* Intro Paragraphs */
+  /* Intro Paragraph */
   #introParagraphs {
     font-size: 1rem;
-    line-height: 1.6;
-    padding: 0 12px;
-    text-align: center;
+    line-height: 1.5;
+    padding: 0 10px;
   }
 
-  /* Cards & Boxes */
-  .about-photo,
+  /* Cards, boxes centered */
   .highlight-box,
   .project-card,
   .education-card,
-  .certification-card {
+  .certification-card,
+  .about-photo {
     width: 90%;
     margin: 15px auto;
     text-align: center;
   }
 
-  /* Center Buttons */
+  /* Center general buttons */
   button, .btn, .cta-button {
     display: inline-block;
     margin: 10px auto;
   }
 
-  /* Headings & Text */
-  h2, h3, p {
-    text-align: center;
+  /* Prevent chart from resizing weirdly */
+  canvas#bgCanvas {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    z-index: -1;
   }
 }
+
 
 
 
