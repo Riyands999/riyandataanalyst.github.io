@@ -157,14 +157,20 @@ function animate(timestamp) {
 particles = Array.from({ length: totalParticles }, () => new Particle());
 requestAnimationFrame(animate);
 
-// ---------- Scroll navigation with mobile offset fix ----------
+// ---------- Scroll navigation with dynamic mobile offset ----------
 const navButtons = document.querySelectorAll('.nav-btn');
 const sections = document.querySelectorAll('main section');
+const navBar = document.querySelector('header'); // your fixed nav bar element
+
+function getOffset() {
+  if (!isMobile || !navBar) return 0;
+  return navBar.offsetHeight + 10; // add small extra margin
+}
 
 function scrollToSection(target) {
   const rect = target.getBoundingClientRect();
   const scrollTop = window.scrollY || document.documentElement.scrollTop;
-  const offset = isMobile ? 70 : 0; // mobile offset to avoid top nav overlapping
+  const offset = getOffset();
   window.scrollTo({
     top: rect.top + scrollTop - offset,
     behavior: 'smooth'
