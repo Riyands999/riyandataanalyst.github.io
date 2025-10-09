@@ -956,80 +956,73 @@ button:hover {
 
 
 
-/* ---------- Final Mobile Fix (Clean & Balanced Layout) ---------- */
-@media screen and (max-width: 768px) {
-
-  /* General layout */
+/* === Mobile Optimization Fix (Final Version) === */
+@media (max-width: 768px) {
   body {
-    text-align: center;
     overflow-x: hidden;
-    margin: 0;
-    padding: 0;
+    text-align: center;
   }
 
-  header {
+  header, nav {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 8px;
-    text-align: center;
-  }
-
-  /* Make your title visible */
-  header h1, header .logo, .site-title {
-    display: block !important;
-    font-size: 1.2rem !important;
-    text-align: center !important;
-    margin-bottom: 6px;
-  }
-
-  /* Navbar fix */
-  nav {
-    display: flex;
-    flex-wrap: wrap;
     justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  nav {
     gap: 8px;
-    width: 100%;
+    margin-bottom: 10px;
   }
 
-  nav .nav-btn {
-    flex: 1 1 30%;
-    min-width: 90px;
+  nav a {
+    display: inline-block;
+    margin: 5px;
+    font-size: 14px;
+    padding: 8px 12px;
+  }
+
+  /* Show all navigation buttons properly */
+  nav a:nth-child(n) {
+    display: inline-block !important;
+  }
+
+  /* Make sure title is visible */
+  .hero-title, .title, h1, h2 {
+    font-size: 20px !important;
+    line-height: 1.2;
+    margin: 10px auto;
+    display: block;
     text-align: center;
   }
 
-  /* Prevent overlapping charts */
-  canvas#bgCanvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
+  /* Center charts and scale down */
+  canvas, .chart, .chart-container {
+    max-width: 90% !important;
+    height: auto !important;
+    display: block;
+    margin: 0 auto 20px auto;
   }
 
-  /* Slightly reduce chart drawing scale */
-  body::after {
-    content: '';
-    display: none;
-  }
-
-  #introParagraphs {
-    font-size: 0.9rem;
-    line-height: 1.5;
-    padding: 0 12px;
-  }
-
-  section {
-    width: 95%;
+  /* Reduce overall text size */
+  section, p {
+    font-size: 14px;
+    text-align: center;
     margin: 0 auto;
-    text-align: center;
   }
 
-  .highlight-box,
-  .project-card,
-  .education-card,
-  .certification-card {
-    width: 95%;
-    margin: 15px auto;
+  /* Fix alignment for hero text */
+  .hero-section {
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Prevent overflow on small devices */
+  * {
+    box-sizing: border-box;
   }
 }
+
 
