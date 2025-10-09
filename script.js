@@ -61,16 +61,19 @@ function connectLines() {
   }
 }
 
-// ---------- Decorative Charts ----------
+// ---------- Decorative Charts (enhanced glow) ----------
 function drawVerticalBarChart(x, y, w, h, progress) {
   ctx.save();
   ctx.translate(x, y);
   for (let i = 0; i < 5; i++) {
     const bh = Math.sin(progress + i) * (isMobile ? 25 : 50) + (isMobile ? 40 : 80);
+    ctx.shadowBlur = 20;
+    ctx.shadowColor = '#00ffaa';
     ctx.fillStyle = '#00ffaa';
     ctx.fillRect(i * (w / 5 + (isMobile ? 7 : 15)), h - bh, w / 5, bh);
   }
   ctx.restore();
+  ctx.shadowBlur = 0;
 }
 
 function drawHorizontalBarChart(x, y, w, h, progress) {
@@ -78,10 +81,13 @@ function drawHorizontalBarChart(x, y, w, h, progress) {
   ctx.translate(x, y);
   for (let i = 0; i < 4; i++) {
     const bw = Math.sin(progress + i) * (isMobile ? 40 : 80) + (isMobile ? 75 : 150);
+    ctx.shadowBlur = 20;
+    ctx.shadowColor = '#0077ff';
     ctx.fillStyle = '#0077ff';
     ctx.fillRect(0, i * (h / 4 + (isMobile ? 7 : 15)), bw, h / 4);
   }
   ctx.restore();
+  ctx.shadowBlur = 0;
 }
 
 function drawPieChart(x, y, r, progress) {
@@ -89,6 +95,7 @@ function drawPieChart(x, y, r, progress) {
   ctx.translate(x, y);
   const slices = 4;
   const angleStep = (Math.PI * 2) / slices;
+  const sliceColors = ['#00ffff', '#0077ff', '#00ffaa', '#00ccff'];
   for (let i = 0; i < slices; i++) {
     ctx.beginPath();
     ctx.moveTo(0, 0);
@@ -99,7 +106,9 @@ function drawPieChart(x, y, r, progress) {
       i * angleStep + progress / 2,
       (i + 1) * angleStep + progress / 2
     );
-    ctx.fillStyle = ['#00ffff', '#0077ff', '#00ffaa', '#00ccff'][i];
+    ctx.shadowBlur = 25;
+    ctx.shadowColor = sliceColors[i];
+    ctx.fillStyle = sliceColors[i];
     ctx.fill();
   }
   ctx.beginPath();
@@ -108,6 +117,7 @@ function drawPieChart(x, y, r, progress) {
   ctx.fill();
   ctx.restore();
   ctx.globalCompositeOperation = 'source-over';
+  ctx.shadowBlur = 0;
 }
 
 // -------- Animation loop ----------
@@ -132,12 +142,10 @@ function animate(timestamp) {
   particlesProgress += 0.02;
 
   if (isMobile) {
-    // ---------- MOBILE SMALLER CHARTS ----------
     drawHorizontalBarChart(canvas.width - 180, 60, 120, 60, particlesProgress);
     drawPieChart(canvas.width / 2, canvas.height / 2, 40, particlesProgress);
     drawVerticalBarChart(canvas.width - 180, canvas.height - 120, 120, 75, particlesProgress);
   } else {
-    // ---------- DESKTOP ORIGINAL CHARTS ----------
     drawHorizontalBarChart(canvas.width - 350, 100, 250, 120, particlesProgress);
     drawPieChart(canvas.width / 2, canvas.height / 2, 80, particlesProgress);
     drawVerticalBarChart(canvas.width - 350, canvas.height - 250, 250, 150, particlesProgress);
