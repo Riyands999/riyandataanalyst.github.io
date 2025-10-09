@@ -1,4 +1,4 @@
-// ---------- Background animation (optimized for mobile + glitch fix + enhancements) ----------
+// ---------- Background animation (optimized for mobile + glitch fix) ----------
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
@@ -246,25 +246,6 @@ function typeParagraphs() {
   }
 }
 window.addEventListener('load', () => setTimeout(typeParagraphs, 500));
-
-// ---------- Dynamic Home Section Offset (fix for mobile desktop mode) ----------
-function adjustHomeSection() {
-  const introSection = document.querySelector('#home');
-  const introParagraphs = document.getElementById('introParagraphs');
-  const exploreBtn = document.getElementById('exploreBtn');
-  if (!introSection || !introParagraphs || !exploreBtn) return;
-
-  const vh = window.innerHeight;
-
-  // Dynamic top offset: 15% from top for small screens, 25% for large screens
-  const offset = window.innerWidth < 768 ? vh * 0.15 : vh * 0.25;
-
-  introParagraphs.style.marginTop = offset + 'px';
-  exploreBtn.style.marginTop = '20px';
-}
-
-window.addEventListener('resize', adjustHomeSection);
-window.addEventListener('load', adjustHomeSection);
 
 // ---------- About animation ----------
 const aboutSection = document.querySelector('#about');
