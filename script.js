@@ -11,8 +11,10 @@ function resizeCanvas() {
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
 
-// Reduce particle count on mobile devices
-const isMobile = window.innerWidth < 768;
+// Detect mobile
+let isMobile = window.innerWidth < 768;
+
+// Particle count based on device
 const totalParticles = isMobile ? 40 : 100;
 
 class Particle {
@@ -60,32 +62,29 @@ function connectLines() {
 }
 
 // ---------- Decorative Charts ----------
-function drawVerticalBarChart(x, y, w, h, progress, mobile = false) {
-  const scale = mobile ? 0.2 : 1; // much smaller on mobile
+function drawVerticalBarChart(x, y, w, h, progress) {
   ctx.save();
   ctx.translate(x, y);
   for (let i = 0; i < 5; i++) {
-    const bh = (Math.sin(progress + i) * 50 + 80) * scale;
+    const bh = Math.sin(progress + i) * (isMobile ? 25 : 50) + (isMobile ? 40 : 80);
     ctx.fillStyle = '#00ffaa';
-    ctx.fillRect(i * ((w * scale) / 5 + 10), h - bh, (w * scale) / 5, bh);
+    ctx.fillRect(i * (w / 5 + (isMobile ? 7 : 15)), h - bh, w / 5, bh);
   }
   ctx.restore();
 }
 
-function drawHorizontalBarChart(x, y, w, h, progress, mobile = false) {
-  const scale = mobile ? 0.2 : 1; // much smaller on mobile
+function drawHorizontalBarChart(x, y, w, h, progress) {
   ctx.save();
   ctx.translate(x, y);
   for (let i = 0; i < 4; i++) {
-    const bw = (Math.sin(progress + i) * 80 + 150) * scale;
+    const bw = Math.sin(progress + i) * (isMobile ? 40 : 80) + (isMobile ? 75 : 150);
     ctx.fillStyle = '#0077ff';
-    ctx.fillRect(0, i * ((h / 4 + 10) * scale), bw, (h / 4) * scale);
+    ctx.fillRect(0, i * (h / 4 + (isMobile ? 7 : 15)), bw, h / 4);
   }
   ctx.restore();
 }
 
-function drawPieChart(x, y, r, progress, mobile = false) {
-  const scale = mobile ? 0.2 : 1; // much smaller on mobile
+function drawPieChart(x, y, r, progress) {
   ctx.save();
   ctx.translate(x, y);
   const slices = 4;
@@ -93,19 +92,25 @@ function drawPieChart(x, y, r, progress, mobile = false) {
   for (let i = 0; i < slices; i++) {
     ctx.beginPath();
     ctx.moveTo(0, 0);
-    ctx.arc(0, 0, r * scale, i * angleStep + progress / 2, (i + 1) * angleStep + progress / 2);
+    ctx.arc(
+      0,
+      0,
+      isMobile ? r / 2 : r,
+      i * angleStep + progress / 2,
+      (i + 1) * angleStep + progress / 2
+    );
     ctx.fillStyle = ['#00ffff', '#0077ff', '#00ffaa', '#00ccff'][i];
     ctx.fill();
   }
   ctx.beginPath();
-  ctx.arc(0, 0, r * 0.4 * scale, 0, Math.PI * 2);
+  ctx.arc(0, 0, (isMobile ? r : r) * 0.4, 0, Math.PI * 2);
   ctx.globalCompositeOperation = 'destination-out';
   ctx.fill();
   ctx.restore();
   ctx.globalCompositeOperation = 'source-over';
 }
 
-// -------- Animation loop (with FPS control) ----------
+// -------- Animation loop ----------
 let particlesProgress = 0;
 let lastTime = 0;
 const fps = 45;
@@ -121,18 +126,18 @@ function animate(timestamp) {
   ctx.fillStyle = 'rgba(0, 0, 0, 0.98)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  particles.forEach(p => { p.update(); p.draw(); });
+  particles.forEach(p => p.update() && p.draw());
   connectLines();
 
   particlesProgress += 0.02;
 
   if (isMobile) {
-    // Subtle small charts for mobile
-    drawHorizontalBarChart(canvas.width - 100, 40, 100, 50, particlesProgress, true);
-    drawPieChart(canvas.width / 2, canvas.height / 2, 30, particlesProgress, true);
-    drawVerticalBarChart(canvas.width - 100, canvas.height - 80, 100, 50, particlesProgress, true);
+    // ---------- MOBILE SMALLER CHARTS ----------
+    drawHorizontalBarChart(canvas.width - 180, 60, 120, 60, particlesProgress);
+    drawPieChart(canvas.width / 2, canvas.height / 2, 40, particlesProgress);
+    drawVerticalBarChart(canvas.width - 180, canvas.height - 120, 120, 75, particlesProgress);
   } else {
-    // Original desktop charts
+    // ---------- DESKTOP ORIGINAL CHARTS ----------
     drawHorizontalBarChart(canvas.width - 350, 100, 250, 120, particlesProgress);
     drawPieChart(canvas.width / 2, canvas.height / 2, 80, particlesProgress);
     drawVerticalBarChart(canvas.width - 350, canvas.height - 250, 250, 150, particlesProgress);
@@ -143,3 +148,111 @@ function animate(timestamp) {
 
 particles = Array.from({ length: totalParticles }, () => new Particle());
 requestAnimationFrame(animate);
+
+// ---------- Scroll navigation ----------
+const navButtons = document.querySelectorAll('.nav-btn');
+const sections = document.querySelectorAll('main section');
+
+function onScroll() {
+  const scrollPos = window.scrollY + window.innerHeight / 2;
+  sections.forEach((sec, idx) => {
+    if (scrollPos >= sec.offsetTop && scrollPos < sec.offsetTop + sec.offsetHeight) {
+      navButtons.forEach(b => b.classList.remove('active'));
+      if (navButtons[idx]) navButtons[idx].classList.add('active');
+      sec.classList.add('visible');
+    } else {
+      sec.classList.remove('visible');
+    }
+  });
+}
+window.addEventListener('scroll', onScroll, { passive: true });
+window.addEventListener('load', onScroll);
+
+navButtons.forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(btn.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+// ---------- Explore button ----------
+const exploreBtn = document.getElementById('exploreBtn');
+if (exploreBtn) {
+  exploreBtn.addEventListener('click', () => {
+    document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
+  });
+}
+
+// ---------- On-scroll animations ----------
+function onScrollShow(selector, className = 'show', delay = 0) {
+  const elements = document.querySelectorAll(selector);
+  const trigger = window.innerHeight * 0.85;
+  elements.forEach((el, i) => {
+    if (el.getBoundingClientRect().top < trigger) {
+      setTimeout(() => el.classList.add(className), i * delay);
+    }
+  });
+}
+
+window.addEventListener('scroll', () => {
+  onScrollShow('.project-card');
+  onScrollShow('.education-card');
+}, { passive: true });
+
+window.addEventListener('load', () => {
+  onScrollShow('.project-card');
+  onScrollShow('.education-card');
+});
+
+// ---------- Typing intro ----------
+const introEl = document.getElementById('introParagraphs');
+const paragraphs = [
+  "Hi, I'm <span class='highlight-name'>Muhammad Riyan</span>, a Data Analyst with a passion for turning data into actionable insights.",
+  "Data-Driven Solutions for Business Growth.",
+  "As a Bachelor's graduate in Data Science, I specialize in data analysis, visualization, and business intelligence. With expertise in Python, SQL, Power BI, and Excel, I help organizations make informed decisions."
+];
+
+let pIndex = 0, cIndex = 0, accumulated = "";
+const typingSpeed = 25, paragraphDelay = 400;
+
+function typeParagraphs() {
+  if (!introEl) return;
+  if (pIndex < paragraphs.length) {
+    const current = paragraphs[pIndex];
+    if (cIndex < current.length) {
+      if (current.charAt(cIndex) === '<') {
+        const closeIdx = current.indexOf('>', cIndex);
+        accumulated += current.slice(cIndex, closeIdx + 1);
+        cIndex = closeIdx + 1;
+      } else {
+        accumulated += current.charAt(cIndex++);
+      }
+      introEl.innerHTML = accumulated;
+      setTimeout(typeParagraphs, typingSpeed);
+    } else {
+      accumulated += "<br><br>";
+      pIndex++; cIndex = 0;
+      setTimeout(typeParagraphs, paragraphDelay);
+    }
+  }
+}
+window.addEventListener('load', () => setTimeout(typeParagraphs, 500));
+
+// ---------- About animation ----------
+const aboutSection = document.querySelector('#about');
+const aboutPhoto = document.querySelector('.about-photo');
+const aboutCards = document.querySelectorAll('.highlight-box');
+
+function showAboutOnScroll() {
+  if (!aboutSection) return;
+  const rect = aboutSection.getBoundingClientRect();
+  if (rect.top < window.innerHeight * 0.82) {
+    aboutPhoto.classList.add('visible');
+    aboutCards.forEach((card, i) => {
+      setTimeout(() => card.classList.add('visible'), i * 150);
+    });
+  }
+}
+window.addEventListener('scroll', showAboutOnScroll, { passive: true });
+window.addEventListener('load', showAboutOnScroll);
