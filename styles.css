@@ -1000,3 +1000,80 @@ button:hover {
   }
 }
 
+/* ---------- Final Mobile Fix (Clean & Balanced Layout) ---------- */
+@media screen and (max-width: 768px) {
+
+  /* General layout */
+  body {
+    text-align: center;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-align: center;
+  }
+
+  /* Make your title visible */
+  header h1, header .logo, .site-title {
+    display: block !important;
+    font-size: 1.2rem !important;
+    text-align: center !important;
+    margin-bottom: 6px;
+  }
+
+  /* Navbar fix */
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+  }
+
+  nav .nav-btn {
+    flex: 1 1 30%;
+    min-width: 90px;
+    text-align: center;
+  }
+
+  /* Prevent overlapping charts */
+  canvas#bgCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+  /* Slightly reduce chart drawing scale */
+  body::after {
+    content: '';
+    display: none;
+  }
+
+  #introParagraphs {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    padding: 0 12px;
+  }
+
+  section {
+    width: 95%;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .highlight-box,
+  .project-card,
+  .education-card,
+  .certification-card {
+    width: 95%;
+    margin: 15px auto;
+  }
+}
+
