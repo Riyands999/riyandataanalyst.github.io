@@ -956,107 +956,99 @@ button:hover {
 
 
 
-/* ---------- FINAL PERFECT MOBILE RESPONSIVE FIX ---------- */
+/* ---------- FINAL RESPONSIVE FIX (Two Rows Buttons, Centered Layout) ---------- */
 @media screen and (max-width: 768px) {
 
-  /* General reset */
-  html, body {
-    width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow-x: hidden !important;
-    text-align: center !important;
+  /* General Layout */
+  body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    text-align: center;
   }
 
-  /* Header section */
+  /* Header Section */
   header {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
-    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    padding: 12px 0;
   }
 
-  /* Show your name/title */
   header h1,
   .site-title,
   .logo {
-    display: block !important;
-    font-size: 1.3rem !important;
-    color: #00ffff !important;
-    text-align: center !important;
-    margin: 10px auto !important;
+    display: block;
+    text-align: center;
+    margin: 6px 0;
+    font-size: 1.4rem;
+    color: inherit;
   }
 
-  /* Navigation bar fix */
+  /* Navigation Styling */
   nav {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 6px !important;
-    padding: 8px 0 !important;
-    width: 100% !important;
+    display: flex;
+    flex-wrap: wrap; /* Allows buttons in two rows */
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 0;
+    width: 100%;
   }
 
-  /* Each button (including Home) visible */
+  /* Button Style */
   nav .nav-btn {
-    flex: 1 1 40% !important;
-    min-width: 100px !important;
-    text-align: center !important;
-    display: inline-block !important;
-    margin: 5px !important;
-    font-size: 0.9rem !important;
+    display: inline-block;
+    text-align: center;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    min-width: 100px; /* Ensures even button width */
+    margin: 4px;
   }
 
-  /* Content center alignment */
+  /* Center Main Sections */
   main, section {
-    width: 95% !important;
-    margin: 0 auto !important;
-    text-align: center !important;
+    width: 95%;
+    margin: 0 auto;
+    text-align: center;
   }
 
-  /* Text paragraphs */
+  /* Intro Paragraphs */
   #introParagraphs {
-    font-size: 1rem !important;
-    line-height: 1.6 !important;
-    padding: 0 10px !important;
-    text-align: center !important;
+    font-size: 1rem;
+    line-height: 1.6;
+    padding: 0 12px;
+    text-align: center;
   }
 
-  /* Cards and photos centered */
+  /* Cards & Boxes */
   .about-photo,
   .highlight-box,
   .project-card,
   .education-card,
   .certification-card {
-    width: 90% !important;
-    margin: 12px auto !important;
-    text-align: center !important;
+    width: 90%;
+    margin: 15px auto;
+    text-align: center;
   }
 
-  /* Background animation charts smaller */
-  canvas#bgCanvas {
-    transform: scale(0.55) !important;
-    transform-origin: center top !important;
-    opacity: 0.5 !important;
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    z-index: -1 !important;
-  }
-
-  /* Buttons & titles centered */
+  /* Center Buttons */
   button, .btn, .cta-button {
-    display: block !important;
-    margin: 10px auto !important;
+    display: inline-block;
+    margin: 10px auto;
   }
 
+  /* Headings & Text */
   h2, h3, p {
-    text-align: center !important;
+    text-align: center;
   }
 }
+
 
 
 
