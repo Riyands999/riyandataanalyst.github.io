@@ -954,62 +954,49 @@ button:hover {
   text-decoration: underline;
 }
 
-/* ---------- Mobile Responsive Fix ---------- */
+/* ---------- Mobile Responsive Fix (Updated & Forced Centering) ---------- */
 @media screen and (max-width: 768px) {
-  body {
-    text-align: center;
-    overflow-x: hidden;
+  html, body {
+    width: 100% !important;
+    overflow-x: hidden !important;
+    text-align: center !important;
   }
 
-  header {
-    flex-direction: column;
-    align-items: center;
+  header, nav, main, section {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    margin: 0 auto !important;
   }
 
   nav {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 8px;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
   }
 
-  main {
-    padding: 20px 10px;
+  .nav-btn {
+    display: inline-block !important;
+    text-align: center !important;
   }
 
-  section {
-    width: 100%;
-    max-width: 90%;
-    margin: 0 auto;
-  }
-
-  .about-photo {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-
-  .highlight-box {
-    width: 90%;
-    margin: 15px auto;
-    text-align: center;
-  }
-
-  .project-card, 
-  .education-card,
-  .certification-card {
-    width: 90%;
-    margin: 15px auto;
+  .about-photo, .highlight-box, .project-card, .education-card, .certification-card {
+    margin: 15px auto !important;
+    width: 90% !important;
+    text-align: center !important;
   }
 
   #introParagraphs {
-    font-size: 0.9rem;
-    padding: 0 10px;
+    font-size: 0.95rem !important;
+    padding: 0 12px !important;
+    text-align: center !important;
   }
 
   canvas#bgCanvas {
-    position: fixed;
-    top: 0;
-    left: 0;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
   }
 }
 
