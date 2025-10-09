@@ -1,4 +1,4 @@
-// ---------- Background animation (optimized for mobile + glitch fix) ----------
+// ---------- Background animation (optimized for mobile + glitch fix + enhancements) ----------
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
@@ -157,25 +157,9 @@ function animate(timestamp) {
 particles = Array.from({ length: totalParticles }, () => new Particle());
 requestAnimationFrame(animate);
 
-// ---------- Scroll navigation with dynamic mobile offset ----------
+// ---------- Scroll navigation ----------
 const navButtons = document.querySelectorAll('.nav-btn');
 const sections = document.querySelectorAll('main section');
-const navBar = document.querySelector('header'); // your fixed nav bar element
-
-function getOffset() {
-  if (!isMobile || !navBar) return 0;
-  return navBar.offsetHeight + 10; // add small extra margin
-}
-
-function scrollToSection(target) {
-  const rect = target.getBoundingClientRect();
-  const scrollTop = window.scrollY || document.documentElement.scrollTop;
-  const offset = getOffset();
-  window.scrollTo({
-    top: rect.top + scrollTop - offset,
-    behavior: 'smooth'
-  });
-}
 
 function onScroll() {
   const scrollPos = window.scrollY + window.innerHeight / 2;
@@ -196,7 +180,7 @@ navButtons.forEach(btn => {
   btn.addEventListener('click', e => {
     e.preventDefault();
     const target = document.querySelector(btn.getAttribute('href'));
-    if (target) scrollToSection(target);
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
   });
 });
 
@@ -204,8 +188,7 @@ navButtons.forEach(btn => {
 const exploreBtn = document.getElementById('exploreBtn');
 if (exploreBtn) {
   exploreBtn.addEventListener('click', () => {
-    const projects = document.querySelector('#projects');
-    if (projects) scrollToSection(projects);
+    document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
   });
 }
 
@@ -263,6 +246,25 @@ function typeParagraphs() {
   }
 }
 window.addEventListener('load', () => setTimeout(typeParagraphs, 500));
+
+// ---------- Dynamic Home Section Offset (fix for mobile desktop mode) ----------
+function adjustHomeSection() {
+  const introSection = document.querySelector('#home');
+  const introParagraphs = document.getElementById('introParagraphs');
+  const exploreBtn = document.getElementById('exploreBtn');
+  if (!introSection || !introParagraphs || !exploreBtn) return;
+
+  const vh = window.innerHeight;
+
+  // Dynamic top offset: 15% from top for small screens, 25% for large screens
+  const offset = window.innerWidth < 768 ? vh * 0.15 : vh * 0.25;
+
+  introParagraphs.style.marginTop = offset + 'px';
+  exploreBtn.style.marginTop = '20px';
+}
+
+window.addEventListener('resize', adjustHomeSection);
+window.addEventListener('load', adjustHomeSection);
 
 // ---------- About animation ----------
 const aboutSection = document.querySelector('#about');
