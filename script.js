@@ -41,7 +41,6 @@ class Particle {
 }
 
 function connectLines() {
-  // limit connections for better performance
   const maxDistance = isMobile ? 80 : 120;
   for (let a = 0; a < particles.length; a++) {
     for (let b = a + 1; b < particles.length; b++) {
@@ -61,29 +60,32 @@ function connectLines() {
 }
 
 // ---------- Decorative Charts ----------
-function drawVerticalBarChart(x, y, w, h, progress) {
+function drawVerticalBarChart(x, y, w, h, progress, mobile = false) {
+  const scale = mobile ? 0.4 : 1; // smaller on mobile
   ctx.save();
   ctx.translate(x, y);
   for (let i = 0; i < 5; i++) {
-    const bh = Math.sin(progress + i) * 50 + 80;
+    const bh = (Math.sin(progress + i) * 50 + 80) * scale;
     ctx.fillStyle = '#00ffaa';
-    ctx.fillRect(i * (w / 5 + 15), h - bh, w / 5, bh);
+    ctx.fillRect(i * ((w * scale) / 5 + 15), h - bh, (w * scale) / 5, bh);
   }
   ctx.restore();
 }
 
-function drawHorizontalBarChart(x, y, w, h, progress) {
+function drawHorizontalBarChart(x, y, w, h, progress, mobile = false) {
+  const scale = mobile ? 0.4 : 1;
   ctx.save();
   ctx.translate(x, y);
   for (let i = 0; i < 4; i++) {
-    const bw = Math.sin(progress + i) * 80 + 150;
+    const bw = (Math.sin(progress + i) * 80 + 150) * scale;
     ctx.fillStyle = '#0077ff';
-    ctx.fillRect(0, i * (h / 4 + 15), bw, h / 4);
+    ctx.fillRect(0, i * ((h / 4 + 15) * scale), bw, (h / 4) * scale);
   }
   ctx.restore();
 }
 
-function drawPieChart(x, y, r, progress) {
+function drawPieChart(x, y, r, progress, mobile = false) {
+  const scale = mobile ? 0.4 : 1;
   ctx.save();
   ctx.translate(x, y);
   const slices = 4;
@@ -91,12 +93,12 @@ function drawPieChart(x, y, r, progress) {
   for (let i = 0; i < slices; i++) {
     ctx.beginPath();
     ctx.moveTo(0, 0);
-    ctx.arc(0, 0, r, i * angleStep + progress / 2, (i + 1) * angleStep + progress / 2);
+    ctx.arc(0, 0, r * scale, i * angleStep + progress / 2, (i + 1) * angleStep + progress / 2);
     ctx.fillStyle = ['#00ffff', '#0077ff', '#00ffaa', '#00ccff'][i];
     ctx.fill();
   }
   ctx.beginPath();
-  ctx.arc(0, 0, r * 0.4, 0, Math.PI * 2);
+  ctx.arc(0, 0, r * 0.4 * scale, 0, Math.PI * 2);
   ctx.globalCompositeOperation = 'destination-out';
   ctx.fill();
   ctx.restore();
@@ -106,7 +108,7 @@ function drawPieChart(x, y, r, progress) {
 // -------- Animation loop (with FPS control) ----------
 let particlesProgress = 0;
 let lastTime = 0;
-const fps = 45; // cap animation for mobile
+const fps = 45;
 
 function animate(timestamp) {
   const delta = timestamp - lastTime;
@@ -116,18 +118,25 @@ function animate(timestamp) {
   }
   lastTime = timestamp;
 
-  // FIX: Prevent white flash glitch when navigating
   ctx.fillStyle = 'rgba(0, 0, 0, 0.98)';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  // Continue animation
   particles.forEach(p => { p.update(); p.draw(); });
   connectLines();
 
   particlesProgress += 0.02;
-  drawHorizontalBarChart(canvas.width - 350, 100, 250, 120, particlesProgress);
-  drawPieChart(canvas.width / 2, canvas.height / 2, 80, particlesProgress);
-  drawVerticalBarChart(canvas.width - 350, canvas.height - 250, 250, 150, particlesProgress);
+
+  if (isMobile) {
+    // Smaller charts for mobile
+    drawHorizontalBarChart(canvas.width - 150, 50, 150, 80, particlesProgress, true);
+    drawPieChart(canvas.width / 2, canvas.height / 2, 50, particlesProgress, true);
+    drawVerticalBarChart(canvas.width - 150, canvas.height - 120, 150, 80, particlesProgress, true);
+  } else {
+    // Original desktop charts
+    drawHorizontalBarChart(canvas.width - 350, 100, 250, 120, particlesProgress);
+    drawPieChart(canvas.width / 2, canvas.height / 2, 80, particlesProgress);
+    drawVerticalBarChart(canvas.width - 350, canvas.height - 250, 250, 150, particlesProgress);
+  }
 
   requestAnimationFrame(animate);
 }
