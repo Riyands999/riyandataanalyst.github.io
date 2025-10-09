@@ -1,4 +1,4 @@
-// ---------- Background animation (optimized for mobile) ----------
+// ---------- Background animation (optimized for mobile + glitch fix) ----------
 const canvas = document.getElementById('bgCanvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
@@ -116,7 +116,11 @@ function animate(timestamp) {
   }
   lastTime = timestamp;
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  // FIX: Prevent white flash glitch when navigating
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.98)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  // Continue animation
   particles.forEach(p => { p.update(); p.draw(); });
   connectLines();
 
