@@ -1047,6 +1047,65 @@ button:hover {
   }
 }
 
+/* ---------- MOBILE HEADER ENHANCEMENT: 2-ROW NAV ---------- */
+@media (max-width: 768px) {
+  header {
+    display: flex;
+    justify-content: space-between; /* logo left, nav right */
+    align-items: flex-start;
+    padding: 10px 15px;
+    flex-wrap: wrap; /* allow nav buttons to wrap */
+  }
+
+  .logo {
+    flex: 1;
+    text-align: left;
+    font-size: 1.3rem;
+  }
+
+  nav {
+    display: grid;
+    grid-template-columns: repeat(4, auto); /* 4 buttons on first row */
+    grid-auto-rows: auto; /* second row auto */
+    gap: 6px;
+    justify-content: flex-end;
+    flex: 1;
+  }
+
+  nav ul {
+    display: contents; /* allow direct grid placement of <li> */
+  }
+
+  nav .nav-btn {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 5px 10px;
+    border-radius: 18px;
+    background: linear-gradient(145deg, #111, #222);
+    box-shadow: 0 0 6px #00ffff33;
+    text-align: center;
+  }
+
+  nav a.active,
+  nav a:hover {
+    box-shadow: 0 0 12px #00ffff, 0 0 20px #0077ff;
+    background: linear-gradient(145deg, #00ffff22, #0077ff22);
+  }
+}
+
+/* Optional: very small screens (<480px) */
+@media (max-width: 480px) {
+  nav {
+    grid-template-columns: repeat(3, auto); /* 3 buttons per row */
+    gap: 4px;
+  }
+
+  nav .nav-btn {
+    font-size: 0.7rem;
+    padding: 4px 8px;
+  }
+}
+
 
 
 
