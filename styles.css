@@ -954,3 +954,62 @@ button:hover {
   text-decoration: underline;
 }
 
+/* ---------- Mobile Responsive Fix ---------- */
+@media screen and (max-width: 768px) {
+  body {
+    text-align: center;
+    overflow-x: hidden;
+  }
+
+  header {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  main {
+    padding: 20px 10px;
+  }
+
+  section {
+    width: 100%;
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  .about-photo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .highlight-box {
+    width: 90%;
+    margin: 15px auto;
+    text-align: center;
+  }
+
+  .project-card, 
+  .education-card,
+  .certification-card {
+    width: 90%;
+    margin: 15px auto;
+  }
+
+  #introParagraphs {
+    font-size: 0.9rem;
+    padding: 0 10px;
+  }
+
+  canvas#bgCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+}
+
